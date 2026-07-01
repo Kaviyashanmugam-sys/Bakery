@@ -1,0 +1,484 @@
+{
+  "version": "6.0",
+  "data_api_version": "3.0",
+  "routing_model": {
+    "WELCOME": ["CATEGORY_SELECTION"],
+    "CATEGORY_SELECTION": ["PRODUCTS"],
+    "PRODUCTS": ["QUANTITY"],
+    "QUANTITY": ["CART"],
+    "CART": ["DELIVERY_PICKUP", "CATEGORY_SELECTION"],
+    "DELIVERY_PICKUP": ["ADDRESS", "PAYMENT"],
+    "ADDRESS": ["PAYMENT"],
+    "PAYMENT": ["CONFIRMATION"],
+    "CONFIRMATION": ["SUCCESS"],
+    "SUCCESS": []
+  },
+  "screens": [
+    {
+      "id": "WELCOME",
+      "title": "Welcome",
+      "terminal": false,
+      "data": {
+        "bakery_name": { "type": "string", "__example__": "Sweet Crust Bakery" }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "${data.bakery_name}"
+          },
+          {
+            "type": "TextBody",
+            "text": "Welcome! Let's get your order started. Tap below to browse our menu."
+          },
+          {
+            "type": "Footer",
+            "label": "Start Order",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "trigger": "get_categories"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "CATEGORY_SELECTION",
+      "title": "Choose a Category",
+      "terminal": false,
+      "data": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" }
+            }
+          },
+          "__example__": [
+            { "id": "cat_cakes", "title": "🎂 Cakes" },
+            { "id": "cat_puffs", "title": "🥟 Puffs" }
+          ]
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "category_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "What would you like today?"
+              },
+              {
+                "type": "RadioButtonsGroup",
+                "name": "selected_category",
+                "label": "Category",
+                "required": true,
+                "data-source": "${data.categories}"
+              },
+              {
+                "type": "Footer",
+                "label": "Next",
+                "on-click-action": {
+                  "name": "data_exchange",
+                  "payload": {
+                    "trigger": "get_products",
+                    "category_id": "${form.selected_category}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PRODUCTS",
+      "title": "Select a Product",
+      "terminal": false,
+      "data": {
+        "category_title": { "type": "string" },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "title": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          },
+          "__example__": [
+            { "id": "prod_101", "title": "Chocolate Truffle Cake", "description": "₹650 / cake" }
+          ]
+        }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "product_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "${data.category_title}"
+              },
+              {
+                "type": "RadioButtonsGroup",
+                "name": "selected_product",
+                "label": "Product",
+                "required": true,
+                "data-source": "${data.products}"
+              },
+              {
+                "type": "Footer",
+                "label": "Next",
+                "on-click-action": {
+                  "name": "data_exchange",
+                  "payload": {
+                    "trigger": "select_product",
+                    "product_id": "${form.selected_product}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "QUANTITY",
+      "title": "Quantity",
+      "terminal": false,
+      "data": {
+        "product_name": { "type": "string" },
+        "product_price": { "type": "string" }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "quantity_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "${data.product_name}"
+              },
+              {
+                "type": "TextBody",
+                "text": "Price: ${data.product_price}"
+              },
+              {
+                "type": "TextInput",
+                "name": "quantity",
+                "label": "How many?",
+                "input-type": "number",
+                "required": true,
+                "helper-text": "Enter a number between 1 and 50"
+              },
+              {
+                "type": "Footer",
+                "label": "Add to Cart",
+                "on-click-action": {
+                  "name": "data_exchange",
+                  "payload": {
+                    "trigger": "add_to_cart",
+                    "quantity": "${form.quantity}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CART",
+      "title": "Your Cart",
+      "terminal": false,
+      "data": {
+        "cart_summary": { "type": "string" },
+        "cart_total": { "type": "string" }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "🛒 Your Cart"
+          },
+          {
+            "type": "TextBody",
+            "text": "${data.cart_summary}"
+          },
+          {
+            "type": "TextSubheading",
+            "text": "Total: ${data.cart_total}"
+          },
+          {
+            "type": "EmbeddedLink",
+            "text": "➕ Add another item",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "trigger": "get_categories"
+              }
+            }
+          },
+          {
+            "type": "Footer",
+            "label": "Proceed to Checkout",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "trigger": "go_to_fulfillment"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "DELIVERY_PICKUP",
+      "title": "Pickup or Delivery",
+      "terminal": false,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "fulfillment_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "How would you like to receive your order?"
+              },
+              {
+                "type": "RadioButtonsGroup",
+                "name": "fulfillment_type",
+                "label": "Choose one",
+                "required": true,
+                "data-source": [
+                  { "id": "pickup", "title": "🏪 Store Pickup" },
+                  { "id": "delivery", "title": "🚚 Home Delivery" }
+                ]
+              },
+              {
+                "type": "Footer",
+                "label": "Next",
+                "on-click-action": {
+                  "name": "data_exchange",
+                  "payload": {
+                    "trigger": "set_fulfillment",
+                    "fulfillment_type": "${form.fulfillment_type}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ADDRESS",
+      "title": "Delivery Address",
+      "terminal": false,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "address_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "Where should we deliver?"
+              },
+              {
+                "type": "TextInput",
+                "name": "address_line",
+                "label": "House / Street",
+                "input-type": "text",
+                "required": true
+              },
+              {
+                "type": "TextInput",
+                "name": "city",
+                "label": "City",
+                "input-type": "text",
+                "required": true
+              },
+              {
+                "type": "TextInput",
+                "name": "pincode",
+                "label": "Pincode",
+                "input-type": "number",
+                "required": true,
+                "helper-text": "6-digit pincode"
+              },
+              {
+                "type": "TextInput",
+                "name": "landmark",
+                "label": "Landmark (optional)",
+                "input-type": "text",
+                "required": false
+              },
+              {
+                "type": "Footer",
+                "label": "Next",
+                "on-click-action": {
+                  "name": "data_exchange",
+                  "payload": {
+                    "trigger": "set_address",
+                    "address_line": "${form.address_line}",
+                    "city": "${form.city}",
+                    "pincode": "${form.pincode}",
+                    "landmark": "${form.landmark}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "PAYMENT",
+      "title": "Payment & Schedule",
+      "terminal": false,
+      "data": {},
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "Form",
+            "name": "payment_form",
+            "children": [
+              {
+                "type": "TextHeading",
+                "text": "When and how would you like to pay?"
+              },
+              {
+                "type": "DatePicker",
+                "name": "preferred_date",
+                "label": "Preferred date",
+                "required": true
+              },
+              {
+                "type": "TextInput",
+                "name": "preferred_time",
+                "label": "Preferred time",
+                "input-type": "text",
+                "required": true,
+                "helper-text": "e.g. 5:00 PM"
+              },
+              {
+                "type": "RadioButtonsGroup",
+                "name": "payment_method",
+                "label": "Payment method",
+                "required": true,
+                "data-source": [
+                  { "id": "cash", "title": "💵 Cash" },
+                  { "id": "upi", "title": "📲 UPI" },
+                  { "id": "card", "title": "💳 Card" }
+                ]
+              },
+              {
+                "type": "Footer",
+                "label": "Review Order",
+                "on-click-action": {
+                  "name": "data_exchange",
+                  "payload": {
+                    "trigger": "set_payment",
+                    "preferred_date": "${form.preferred_date}",
+                    "preferred_time": "${form.preferred_time}",
+                    "payment_method": "${form.payment_method}"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "CONFIRMATION",
+      "title": "Confirm Order",
+      "terminal": false,
+      "data": {
+        "order_summary": { "type": "string" },
+        "total_amount": { "type": "string" }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "📋 Review Your Order"
+          },
+          {
+            "type": "TextBody",
+            "text": "${data.order_summary}"
+          },
+          {
+            "type": "TextSubheading",
+            "text": "Total: ${data.total_amount}"
+          },
+          {
+            "type": "Footer",
+            "label": "Confirm Order",
+            "on-click-action": {
+              "name": "data_exchange",
+              "payload": {
+                "trigger": "place_order"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "SUCCESS",
+      "title": "Order Placed",
+      "terminal": true,
+      "success": true,
+      "data": {
+        "order_id": { "type": "string" }
+      },
+      "layout": {
+        "type": "SingleColumnLayout",
+        "children": [
+          {
+            "type": "TextHeading",
+            "text": "🎉 Order Confirmed!"
+          },
+          {
+            "type": "TextBody",
+            "text": "Your order ${data.order_id} has been placed. We'll message you here with updates."
+          },
+          {
+            "type": "Footer",
+            "label": "Done",
+            "on-click-action": {
+              "name": "complete",
+              "payload": {
+                "order_id": "${data.order_id}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
