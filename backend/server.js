@@ -47,6 +47,11 @@ app.get("/", (req, res) => {
   res.json({ success: true, message: "WhatsApp Bakery Bot API is running" });
 });
 
+// Required by Meta for App Review / Live mode — plain HTML pages, no auth needed
+const { getPrivacyPolicy, getTermsOfService } = require("./controllers/legalController");
+app.get("/privacy", getPrivacyPolicy);
+app.get("/terms", getTermsOfService);
+
 // --- Routes ---
 app.use("/webhook", webhookRoutes); // WhatsApp Cloud API webhook (public)
 app.use("/api/flow-endpoint", flowRoutes); // Meta WhatsApp Flow data endpoint (public, encrypted)
