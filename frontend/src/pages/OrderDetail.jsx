@@ -122,6 +122,16 @@ export default function OrderDetail() {
             {order.fulfillmentType === "delivery" && order.deliveryAddress?.line1 && (
               <p className="text-sm text-crust-600/70 mt-1">{order.deliveryAddress.line1}</p>
             )}
+            {order.fulfillmentType === "delivery" && order.deliveryAddress?.mapsLink && (
+              <a
+                href={order.deliveryAddress.mapsLink}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-berry-600 hover:underline mt-1 inline-block"
+              >
+                📍 Open exact location in Google Maps
+              </a>
+            )}
             <p className="text-sm text-crust-600/70 mt-1">
               {order.preferredDate} at {order.preferredTime}
             </p>
