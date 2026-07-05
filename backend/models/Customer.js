@@ -6,6 +6,9 @@ const addressSchema = new mongoose.Schema(
     city: { type: String, trim: true },
     pincode: { type: String, trim: true },
     landmark: { type: String, trim: true },
+    latitude: { type: Number },
+    longitude: { type: Number },
+    mapsLink: { type: String, trim: true },
   },
   { _id: false }
 );
