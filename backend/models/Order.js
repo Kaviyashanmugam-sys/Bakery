@@ -32,6 +32,11 @@ const orderSchema = new mongoose.Schema(
       city: String,
       pincode: String,
       landmark: String,
+      // Set when the customer shares their live location via WhatsApp instead of
+      // (or in addition to) typing an address — far more accurate for delivery.
+      latitude: Number,
+      longitude: Number,
+      mapsLink: String, // convenience Google Maps link built from lat/lng
     },
 
     preferredDate: { type: String }, // as provided by customer, e.g. "2026-07-05"
