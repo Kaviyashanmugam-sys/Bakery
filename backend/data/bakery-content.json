@@ -1,0 +1,142 @@
+{
+  "bakeryInfo": {
+    "name": "Best Mummy Bakery",
+    "tagline": "Fresh Bakes, Homely Taste",
+    "phone": "+91 98765 43210",
+    "whatsapp": "+91 98765 43210",
+    "address": {
+      "line1": "No. 24, Bazaar Street",
+      "area": "Near Bus Stand",
+      "city": "Madurai",
+      "district": "Madurai",
+      "state": "Tamil Nadu",
+      "pincode": "625001"
+    },
+    "openingHours": {
+      "monday_saturday": "7:00 AM - 9:30 PM",
+      "sunday": "7:00 AM - 1:00 PM"
+    },
+    "gstPercentage": 5,
+    "deliveryRadiusKm": 5,
+    "deliveryCharge": 30,
+    "socials": {
+      "instagram": "https://instagram.com/bestmummybakery",
+      "googleReview": "https://g.page/r/bestmummybakery/review"
+    }
+  },
+
+  "categories": [
+    {
+      "name": "Cakes",
+      "emoji": "🎂",
+      "description": "Fresh cream and fondant cakes, baked daily",
+      "displayOrder": 1
+    },
+    {
+      "name": "Birthday Cakes",
+      "emoji": "🎉",
+      "description": "Custom photo cakes and celebration cakes",
+      "displayOrder": 2
+    },
+    {
+      "name": "Pastries",
+      "emoji": "🥐",
+      "description": "Fresh cream pastries and slices",
+      "displayOrder": 3
+    },
+    {
+      "name": "Puffs",
+      "emoji": "🥟",
+      "description": "Hot, flaky puffs baked fresh every morning",
+      "displayOrder": 4
+    },
+    {
+      "name": "Sandwiches",
+      "emoji": "🥪",
+      "description": "Grilled and cold sandwiches",
+      "displayOrder": 5
+    },
+    {
+      "name": "Bread",
+      "emoji": "🍞",
+      "description": "Daily fresh breads and buns",
+      "displayOrder": 6
+    },
+    {
+      "name": "Cookies",
+      "emoji": "🍪",
+      "description": "Butter cookies, biscuits and rusks",
+      "displayOrder": 7
+    },
+    {
+      "name": "Traditional Sweets",
+      "emoji": "🍬",
+      "description": "Laddu, Mysore Pak and other classic sweets",
+      "displayOrder": 8
+    },
+    {
+      "name": "Beverages",
+      "emoji": "🥤",
+      "description": "Cold drinks, milkshakes and fresh juice",
+      "displayOrder": 9
+    }
+  ],
+
+  "products": [
+    { "name": "Chocolate Truffle Cake (500g)", "category": "Cakes", "price": 450, "unit": "cake", "isVeg": true, "isTodaysSpecial": true, "description": "Rich Belgian chocolate truffle, our best-seller" },
+    { "name": "Chocolate Truffle Cake (1kg)", "category": "Cakes", "price": 800, "unit": "cake", "isVeg": true },
+    { "name": "Red Velvet Cake (500g)", "category": "Cakes", "price": 500, "unit": "cake", "isVeg": true },
+    { "name": "Pineapple Cake (500g)", "category": "Cakes", "price": 380, "unit": "cake", "isVeg": true },
+    { "name": "Black Forest Cake (500g)", "category": "Cakes", "price": 420, "unit": "cake", "isVeg": true },
+    { "name": "Butterscotch Cake (500g)", "category": "Cakes", "price": 400, "unit": "cake", "isVeg": true },
+    { "name": "Fresh Fruit Cake (500g)", "category": "Cakes", "price": 480, "unit": "cake", "isVeg": true },
+
+    { "name": "Photo Cake (1kg)", "category": "Birthday Cakes", "price": 900, "unit": "cake", "isVeg": true, "description": "Edible photo print on fresh cream, send photo after ordering" },
+    { "name": "Number Shaped Cake (1kg)", "category": "Birthday Cakes", "price": 950, "unit": "cake", "isVeg": true },
+    { "name": "Cartoon Theme Cake (1kg)", "category": "Birthday Cakes", "price": 1000, "unit": "cake", "isVeg": true },
+    { "name": "Bento / Mini Cake (200g)", "category": "Birthday Cakes", "price": 199, "unit": "cake", "isVeg": true, "isTodaysSpecial": true },
+
+    { "name": "Chocolate Pastry", "category": "Pastries", "price": 45, "unit": "piece", "isVeg": true },
+    { "name": "Pineapple Pastry", "category": "Pastries", "price": 40, "unit": "piece", "isVeg": true },
+    { "name": "Black Forest Pastry", "category": "Pastries", "price": 45, "unit": "piece", "isVeg": true },
+    { "name": "Butter Croissant", "category": "Pastries", "price": 55, "unit": "piece", "isVeg": true },
+    { "name": "Veg Puff Pastry", "category": "Pastries", "price": 35, "unit": "piece", "isVeg": true },
+
+    { "name": "Veg Puff", "category": "Puffs", "price": 20, "unit": "piece", "isVeg": true },
+    { "name": "Paneer Puff", "category": "Puffs", "price": 30, "unit": "piece", "isVeg": true },
+    { "name": "Egg Puff", "category": "Puffs", "price": 25, "unit": "piece", "isVeg": false },
+    { "name": "Chicken Puff", "category": "Puffs", "price": 35, "unit": "piece", "isVeg": false, "isTodaysSpecial": true },
+    { "name": "Onion Puff", "category": "Puffs", "price": 20, "unit": "piece", "isVeg": true },
+
+    { "name": "Veg Grilled Sandwich", "category": "Sandwiches", "price": 60, "unit": "piece", "isVeg": true },
+    { "name": "Paneer Tikka Sandwich", "category": "Sandwiches", "price": 80, "unit": "piece", "isVeg": true },
+    { "name": "Cheese Corn Sandwich", "category": "Sandwiches", "price": 70, "unit": "piece", "isVeg": true },
+    { "name": "Chicken Sandwich", "category": "Sandwiches", "price": 90, "unit": "piece", "isVeg": false },
+    { "name": "Club Sandwich", "category": "Sandwiches", "price": 100, "unit": "piece", "isVeg": true },
+
+    { "name": "Milk Bread Loaf", "category": "Bread", "price": 45, "unit": "loaf", "isVeg": true },
+    { "name": "Wheat Bread Loaf", "category": "Bread", "price": 50, "unit": "loaf", "isVeg": true },
+    { "name": "Multigrain Bread", "category": "Bread", "price": 60, "unit": "loaf", "isVeg": true },
+    { "name": "Butter Bun (pack of 4)", "category": "Bread", "price": 40, "unit": "pack", "isVeg": true },
+    { "name": "Garlic Bread", "category": "Bread", "price": 70, "unit": "pack", "isVeg": true },
+
+    { "name": "Butter Cookies (250g)", "category": "Cookies", "price": 100, "unit": "pack", "isVeg": true },
+    { "name": "Choco Chip Cookies (250g)", "category": "Cookies", "price": 120, "unit": "pack", "isVeg": true },
+    { "name": "Ragi Biscuits (200g)", "category": "Cookies", "price": 90, "unit": "pack", "isVeg": true },
+    { "name": "Rusk (200g)", "category": "Cookies", "price": 60, "unit": "pack", "isVeg": true },
+    { "name": "Salt Biscuits (200g)", "category": "Cookies", "price": 70, "unit": "pack", "isVeg": true },
+
+    { "name": "Boondi Laddu (250g)", "category": "Traditional Sweets", "price": 130, "unit": "pack", "isVeg": true, "isTodaysSpecial": true },
+    { "name": "Besan Laddu (250g)", "category": "Traditional Sweets", "price": 140, "unit": "pack", "isVeg": true },
+    { "name": "Mysore Pak (250g)", "category": "Traditional Sweets", "price": 150, "unit": "pack", "isVeg": true },
+    { "name": "Rava Kesari (250g)", "category": "Traditional Sweets", "price": 100, "unit": "pack", "isVeg": true },
+    { "name": "Badusha (6 pieces)", "category": "Traditional Sweets", "price": 120, "unit": "pack", "isVeg": true },
+    { "name": "Jangiri (250g)", "category": "Traditional Sweets", "price": 130, "unit": "pack", "isVeg": true },
+
+    { "name": "Cold Coffee", "category": "Beverages", "price": 60, "unit": "glass", "isVeg": true },
+    { "name": "Chocolate Milkshake", "category": "Beverages", "price": 80, "unit": "glass", "isVeg": true },
+    { "name": "Fresh Lime Soda", "category": "Beverages", "price": 40, "unit": "glass", "isVeg": true },
+    { "name": "Rose Milk", "category": "Beverages", "price": 45, "unit": "glass", "isVeg": true },
+    { "name": "Badam Milk", "category": "Beverages", "price": 70, "unit": "glass", "isVeg": true }
+  ]
+}
