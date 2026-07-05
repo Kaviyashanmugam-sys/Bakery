@@ -74,7 +74,7 @@ async function handleIncomingMessage(phone, message) {
       return handleFulfillmentChoice(phone, replyId);
 
     case "ASK_ADDRESS":
-      return handleAddress(phone, raw);
+      return handleAddress(phone, message, raw);
 
     case "ASK_DATE_TIME":
       return handleDateTime(phone, raw);
@@ -352,14 +352,40 @@ async function handleFulfillmentChoice(phone, replyId) {
   }
   if (replyId === "FULFILL_DELIVERY") {
     await updateSession(phone, { step: "ASK_ADDRESS", dataPatch: { fulfillmentType: "delivery" } });
-    return wa.sendText(phone, "📍 Please share your full *delivery address* (house/street, city, pincode, landmark).");
+    // Prefer WhatsApp's native location-share (precise GPS) over typed text.
+    // We still accept a typed address as a fallback for older WhatsApp clients.
+    await wa.sendLocationRequest(
+      phone,
+      "📍 Tap below to share your delivery location — this helps us find you accurately."
+    );
+    return wa.sendText(
+      phone,
+      "If you'd rather type it, send your full *delivery address* instead (house/street, city, pincode, landmark)."
+    );
   }
   return wa.sendText(phone, "Please tap Pickup or Delivery.");
 }
 
-async function handleAddress(phone, text) {
+async function handleAddress(phone, message, text) {
+  // Customer shared their live GPS location via WhatsApp — this is the precise path.
+  if (message.type === "location" && message.location) {
+    const { latitude, longitude, address, name } = message.location;
+    const mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+    const line1 = [name, address].filter(Boolean).join(", ") || "Shared location";
+
+    await updateSession(phone, {
+      step: "ASK_DATE_TIME",
+      dataPatch: { deliveryAddress: { line1, latitude, longitude, mapsLink } },
+    });
+    return wa.sendText(
+      phone,
+      `📍 Location received!\n\n📅 Please share your preferred *delivery date and time*.\n(e.g. 05-Jul-2026, 5:00 PM)`
+    );
+  }
+
+  // Fallback: typed address
   if (!text || text.length < 8) {
-    return wa.sendText(phone, "Please share a complete delivery address.");
+    return wa.sendText(phone, "Please share your location using the button above, or type your full delivery address.");
   }
   await updateSession(phone, {
     step: "ASK_DATE_TIME",
