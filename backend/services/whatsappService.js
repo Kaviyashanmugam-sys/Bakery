@@ -113,6 +113,11 @@ async function sendOrderConfirmation(to, order) {
     (order.deliveryCharge ? `Delivery Charge: ₹${order.deliveryCharge}\n` : "") +
     `*Total: ₹${order.totalAmount}*\n\n` +
     `Mode: ${order.fulfillmentType === "delivery" ? "🚚 Delivery" : "🏪 Pickup"}\n` +
+    (order.fulfillmentType === "delivery" && order.deliveryAddress?.mapsLink
+      ? `Delivery to: ${order.deliveryAddress.mapsLink}\n`
+      : order.fulfillmentType === "delivery" && order.deliveryAddress?.line1
+      ? `Delivery to: ${order.deliveryAddress.line1}\n`
+      : "") +
     `When: ${order.preferredDate} at ${order.preferredTime}\n` +
     `Payment: ${order.paymentMethod.toUpperCase()}\n\n` +
     `We'll notify you here as your order progresses. Thank you for ordering with us! 🍰`;
@@ -172,11 +177,30 @@ async function sendFlowMessage(to, { flowId, headerText, bodyText, footerText = 
   return sendRaw(payload, { phone: to, type: "interactive", contentForLog: `[Flow] ${headerText}` });
 }
 
+// Sends WhatsApp's native "Request Location" prompt. Unlike a Meta Flow screen,
+// this uses the phone's actual GPS (via WhatsApp's location picker), so it's far
+// more accurate than a customer typing an address. The reply comes back as an
+// inbound message of type "location" with { latitude, longitude, address?, name? }.
+async function sendLocationRequest(to, bodyText = "📍 Please share your delivery location for accurate delivery.") {
+  const payload = {
+    messaging_product: "whatsapp",
+    to,
+    type: "interactive",
+    interactive: {
+      type: "location_request_message",
+      body: { text: bodyText },
+      action: { name: "send_location" },
+    },
+  };
+  return sendRaw(payload, { phone: to, type: "interactive", contentForLog: "[Location Request] " + bodyText });
+}
+
 module.exports = {
   sendText,
   sendButtons,
   sendList,
   sendFlowMessage,
+  sendLocationRequest,
   sendOrderConfirmation,
   sendStatusUpdate,
 };
