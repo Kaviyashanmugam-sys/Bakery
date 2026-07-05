@@ -104,7 +104,7 @@
       "title": "Select a Product",
       "terminal": false,
       "data": {
-        "category_title": { "type": "string" },
+        "category_title": { "type": "string", "__example__": "🎂 Cakes" },
         "products": {
           "type": "array",
           "items": {
@@ -159,8 +159,8 @@
       "title": "Quantity",
       "terminal": false,
       "data": {
-        "product_name": { "type": "string" },
-        "product_price": { "type": "string" }
+        "product_name": { "type": "string", "__example__": "Chocolate Truffle Cake" },
+        "product_price": { "type": "string", "__example__": "₹650 / cake" }
       },
       "layout": {
         "type": "SingleColumnLayout",
@@ -206,8 +206,8 @@
       "title": "Your Cart",
       "terminal": false,
       "data": {
-        "cart_summary": { "type": "string" },
-        "cart_total": { "type": "string" }
+        "cart_summary": { "type": "string", "__example__": "Chocolate Truffle Cake x1 = ₹650.00" },
+        "cart_total": { "type": "string", "__example__": "₹650.00" }
       },
       "layout": {
         "type": "SingleColumnLayout",
@@ -417,8 +417,8 @@
       "title": "Confirm Order",
       "terminal": false,
       "data": {
-        "order_summary": { "type": "string" },
-        "total_amount": { "type": "string" }
+        "order_summary": { "type": "string", "__example__": "Chocolate Truffle Cake x1 = ₹650.00\n\nSubtotal: ₹650.00\nMode: pickup\nWhen: 05-Jul-2026 5:00 PM\nPayment: CASH" },
+        "total_amount": { "type": "string", "__example__": "₹650.00" }
       },
       "layout": {
         "type": "SingleColumnLayout",
@@ -454,7 +454,7 @@
       "terminal": true,
       "success": true,
       "data": {
-        "order_id": { "type": "string" }
+        "order_id": { "type": "string", "__example__": "BAK-20260701-0001" }
       },
       "layout": {
         "type": "SingleColumnLayout",
