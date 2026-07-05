@@ -29,6 +29,20 @@ function parseIncomingMessage(msg) {
       return { type: "interactive", text: interactive.list_reply.title, interactiveId: interactive.list_reply.id };
     }
   }
+  // Customer shared their live GPS location (in reply to a "Request Location" prompt)
+  if (msg.type === "location") {
+    return {
+      type: "location",
+      text: msg.location.address || "",
+      interactiveId: null,
+      location: {
+        latitude: msg.location.latitude,
+        longitude: msg.location.longitude,
+        name: msg.location.name || "",
+        address: msg.location.address || "",
+      },
+    };
+  }
   return { type: "unknown", text: "", interactiveId: null };
 }
 
